@@ -17,7 +17,7 @@ allowed-tools:
 
 ## Pre-check
 
-Launch the `update-checker` agent (subagent). If it returns `AUTO_UPDATE_DISABLED`, tell the user auto-updates are not enabled and suggest `/debo:update-settings` to fix it. Then continue with the skill normally. Do not wait for user input on the pre-check — just mention it briefly and move on.
+Read the file `~/.claude/plugins/data/debo-avadco-debo/debo-update.json` using the Read tool. If the file does not exist or shows `"autoUpdate":false`, briefly mention that auto-updates are not enabled and suggest `/debo:update-settings`. Then continue normally.
 
 ## Instructions
 
