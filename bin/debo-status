@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# debo-status — print debo-update.json contents (for skill pre-check)
+cat "${CLAUDE_PLUGIN_DATA:-$HOME/.debo}/debo-update.json" 2>/dev/null || echo '{"autoUpdate":false}'
