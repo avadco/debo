@@ -1,12 +1,12 @@
 {
-  "description": "Auto-update hook for debo plugin",
+  "description": "Check auto-update status on session start (read-only)",
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/bin/debo-update-check",
+            "command": "result=$(bash ${CLAUDE_PLUGIN_ROOT}/bin/debo-update-check 2>/dev/null || echo AUTO_UPDATE_SKIP); if [ \"$result\" = \"AUTO_UPDATE_DISABLED\" ]; then echo \"debo: auto-update is not enabled. Suggest /debo:update-settings to the user.\"; else echo \"debo: $result\"; fi",
             "timeout": 10
           }
         ]
