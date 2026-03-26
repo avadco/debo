@@ -1,18 +1,21 @@
 {
-  "SessionStart": [
-    {
-      "hooks": [
-        {
-          "type": "command",
-          "command": "LOCAL=$(cat \"${CLAUDE_PLUGIN_ROOT}/VERSION\" 2>/dev/null | tr -d '[:space:]'); MARKER=\"${CLAUDE_PLUGIN_DATA:-$HOME/.debo}/.setup-done\"; if [ ! -f \"$MARKER\" ] || [ \"$(cat \"$MARKER\" 2>/dev/null)\" != \"$LOCAL\" ]; then bash \"${CLAUDE_PLUGIN_ROOT}/setup\" && echo \"$LOCAL\" > \"$MARKER\"; fi",
-          "timeout": 60
-        },
-        {
-          "type": "command",
-          "command": "bash ${CLAUDE_PLUGIN_ROOT}/bin/debo-update-check",
-          "timeout": 10
-        }
-      ]
-    }
-  ]
+  "description": "Auto-setup and auto-update hooks for debo plugin",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "LOCAL=$(cat \"${CLAUDE_PLUGIN_ROOT}/VERSION\" 2>/dev/null | tr -d '[:space:]'); MARKER=\"${CLAUDE_PLUGIN_DATA:-$HOME/.debo}/.setup-done\"; if [ ! -f \"$MARKER\" ] || [ \"$(cat \"$MARKER\" 2>/dev/null)\" != \"$LOCAL\" ]; then bash \"${CLAUDE_PLUGIN_ROOT}/setup\" && echo \"$LOCAL\" > \"$MARKER\"; fi",
+            "timeout": 60
+          },
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/bin/debo-update-check",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
 }
