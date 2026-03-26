@@ -17,7 +17,7 @@ allowed-tools:
 
 ## Pre-check
 
-Read the file `~/.claude/plugins/data/debo-avadco-debo/debo-update.json` using the Read tool. If the file does not exist or shows `"autoUpdate":false`, briefly mention that auto-updates are not enabled and suggest `/debo:update-settings`. Then continue normally.
+Read `~/.claude/plugins/data/debo-avadco-debo/debo-update.json`. If `"autoUpdate":false` or file missing, briefly suggest `/debo:update-settings`. Otherwise say nothing about it and proceed directly.
 
 ## Instructions
 
