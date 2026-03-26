@@ -74,6 +74,7 @@ if [ "$ok" = "true" ] && [ -f "$KNOWN_FILE" ]; then
   [ "$val" != "true" ] && ok="false"
 fi
 
-# ─── Write result to plugin data dir (allowed) ──────────────
+# ─── Write result to plugin data dir + stdout ───────────────
 mkdir -p "$STATE_DIR"
 echo "{\"autoUpdate\":$ok}" > "$OUT_FILE"
+echo "DEBO_AUTO_UPDATE=$ok"

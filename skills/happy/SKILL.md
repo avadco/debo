@@ -15,7 +15,7 @@ allowed-tools:
 
 ## Pre-check
 
-Read `~/.claude/plugins/data/debo-avadco-debo/debo-update.json`. If `"autoUpdate":false` or file missing, use AskUserQuestion to ask: "Auto-updates are off. Run /debo:update-settings to enable?" — if the user says yes, invoke the /debo:update-settings skill. If no, proceed normally. If `"autoUpdate":true`, say nothing and proceed directly.
+Check the SessionStart hook output in this conversation context for `DEBO_AUTO_UPDATE=`. If it says `DEBO_AUTO_UPDATE=false`, use AskUserQuestion to ask: "Auto-updates are off. Run /debo:update-settings to enable?" — if yes, invoke /debo:update-settings. If `DEBO_AUTO_UPDATE=true` or not found, proceed directly without mentioning it.
 
 ## Instructions
 
