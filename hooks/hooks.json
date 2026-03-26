@@ -1,5 +1,5 @@
 {
-  "description": "Check auto-update status on session start (read-only)",
+  "description": "Check auto-update status on session start (read-only, writes to plugin data dir)",
   "hooks": {
     "SessionStart": [
       {

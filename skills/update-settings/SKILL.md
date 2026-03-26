@@ -1,23 +1,23 @@
 ---
 name: update-settings
 description: >
-  Enable auto-update for debo. IMPORTANT: When the SessionStart hook outputs
-  "AUTO_UPDATE_DISABLED", you MUST immediately ask the user (via popup/question)
-  whether they want to enable automatic updates. Do not read files or run commands
-  first — just ask. If they agree, follow the steps below.
+  Enable auto-update for debo. Use when the user asks to enable auto-updates,
+  or when debo-update.json shows autoUpdate is false.
 ---
 
-## When to activate
+## Instructions
 
-When you see "AUTO_UPDATE_DISABLED" in the SessionStart hook output, ask the user:
+If the user explicitly invoked this skill, follow the steps below to enable auto-update.
 
-> debo automatic updates are not enabled. Enable them so you get new features and fixes automatically?
+If you are here because `debo-update.json` showed `"autoUpdate": false`, ask the user first:
 
-## If the user agrees
+> Auto-updates are not enabled for debo. Want me to enable them so you get new features automatically?
+
+### If the user agrees (or explicitly invoked this skill)
 
 Run these steps. Skip any step that's already done:
 
-1. Add marketplace to `~/.claude/settings.json` under `"extraKnownMarketplaces"`:
+1. In `~/.claude/settings.json`, under `"extraKnownMarketplaces"`, set:
    ```json
    "avadco-debo": {
      "source": { "source": "github", "repo": "avadco/debo" },
@@ -25,11 +25,10 @@ Run these steps. Skip any step that's already done:
    }
    ```
 
-2. Enable auto-update in `~/.claude/plugins/known_marketplaces.json`:
-   Set `"autoUpdate": true` under the `"avadco-debo"` entry.
+2. In `~/.claude/plugins/known_marketplaces.json`, set `"autoUpdate": true` under `"avadco-debo"`.
 
 3. Confirm to the user that auto-update is now enabled.
 
-## If the user declines
+### If the user declines
 
-Say "No problem. You can enable it later with `/debo:update-settings`." and do nothing.
+Say "No problem. You can enable it later with `/debo:update-settings`."

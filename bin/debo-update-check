@@ -1,20 +1,18 @@
 #!/usr/bin/env bash
-# debo-update-check — READ-ONLY check if autoUpdate is enabled.
+# debo-update-check — READ-ONLY check, writes result to plugin data dir only.
 #
-# Output (one line):
-#   AUTO_UPDATE_OK         — autoUpdate is true in both files
-#   AUTO_UPDATE_DISABLED   — autoUpdate is not enabled (suggest /debo:update-settings)
-#   AUTO_UPDATE_SKIP       — files not found or no JSON tool
-#
-# This script NEVER modifies user files. If auto-update is not enabled,
-# it outputs AUTO_UPDATE_DISABLED so Claude can suggest the update-settings skill.
+# Checks if autoUpdate is enabled in settings.json and known_marketplaces.json.
+# Writes {"autoUpdate": true/false} to ${CLAUDE_PLUGIN_DATA}/debo-update.json
+# NEVER modifies user settings files.
 set -euo pipefail
 
 MARKETPLACE_ID="avadco-debo"
 SETTINGS_FILE="$HOME/.claude/settings.json"
 KNOWN_FILE="$HOME/.claude/plugins/known_marketplaces.json"
+STATE_DIR="${CLAUDE_PLUGIN_DATA:-$HOME/.debo}"
+OUT_FILE="$STATE_DIR/debo-update.json"
 
-# ─── Detect a working JSON tool (jq, python3, python, node) ────
+# ─── Detect JSON tool ────────────────────────────────────────
 if command -v jq >/dev/null 2>&1; then
   JSON_TOOL="jq"
 elif command -v python3 >/dev/null 2>&1; then
@@ -24,12 +22,12 @@ elif command -v python >/dev/null 2>&1; then
 elif command -v node >/dev/null 2>&1; then
   JSON_TOOL="node"
 else
-  echo "AUTO_UPDATE_SKIP"
+  mkdir -p "$STATE_DIR"
+  echo '{"autoUpdate":false}' > "$OUT_FILE"
   exit 0
 fi
 
-# ─── json_read <file> <dotted.key.path> ──────────────────────
-# Reads a nested JSON value. Returns "true", "false", "null", etc.
+# ─── json_read ───────────────────────────────────────────────
 json_read() {
   local file="$1" key_path="$2"
   case "$JSON_TOOL" in
@@ -61,26 +59,21 @@ try {
   esac
 }
 
-# ─── Check both files (read-only) ────────────────────────────
-settings_ok="true"
-known_ok="true"
+# ─── Check (read-only) ──────────────────────────────────────
+ok="true"
 
 if [ -f "$SETTINGS_FILE" ]; then
   val="$(json_read "$SETTINGS_FILE" ".extraKnownMarketplaces.\"$MARKETPLACE_ID\".autoUpdate")"
-  [ "$val" != "true" ] && settings_ok="false"
+  [ "$val" != "true" ] && ok="false"
 else
-  settings_ok="false"
+  ok="false"
 fi
 
-if [ -f "$KNOWN_FILE" ]; then
+if [ "$ok" = "true" ] && [ -f "$KNOWN_FILE" ]; then
   val="$(json_read "$KNOWN_FILE" ".\"$MARKETPLACE_ID\".autoUpdate")"
-  [ "$val" != "true" ] && known_ok="false"
-else
-  known_ok="false"
+  [ "$val" != "true" ] && ok="false"
 fi
 
-if [ "$settings_ok" = "true" ] && [ "$known_ok" = "true" ]; then
-  echo "AUTO_UPDATE_OK"
-else
-  echo "AUTO_UPDATE_DISABLED"
-fi
+# ─── Write result to plugin data dir (allowed) ──────────────
+mkdir -p "$STATE_DIR"
+echo "{\"autoUpdate\":$ok}" > "$OUT_FILE"
