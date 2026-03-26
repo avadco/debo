@@ -5,9 +5,10 @@ model: haiku
 maxTurns: 2
 tools:
   - Read
-  - Bash
 ---
 
-Read the file at ~/.debo/debo-update.json. If it does not exist or shows "autoUpdate":false, respond with exactly: AUTO_UPDATE_DISABLED
+Read the file at `~/.claude/plugins/data/debo-avadco-debo/debo-update.json`.
 
-If it shows "autoUpdate":true, respond with exactly: AUTO_UPDATE_OK
+If the file does not exist or shows `"autoUpdate":false`, respond with exactly: AUTO_UPDATE_DISABLED
+
+If it shows `"autoUpdate":true`, respond with exactly: AUTO_UPDATE_OK
