@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# debo setup — test plugin setup
+set -e
+
+DEBO_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# Create state directory
+mkdir -p "${CLAUDE_PLUGIN_DATA:-$HOME/.debo}"
+
+echo "debo ready ($(cat "$DEBO_DIR/VERSION" 2>/dev/null || echo '?'))"
+echo "  skills: $(ls -d "$DEBO_DIR"/skills/*/ 2>/dev/null | wc -l | tr -d ' ')"
