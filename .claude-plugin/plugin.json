@@ -1,6 +1,6 @@
 {
   "name": "debo",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Test plugin — validates SessionStart hooks, auto-setup, and marketplace auto-update.",
   "author": {
     "name": "avadco",

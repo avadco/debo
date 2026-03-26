@@ -1,6 +1,18 @@
 ---
 name: happy
+preamble-tier: 4
+version: 1.0.0
 description: A cheerful skill that praises and hypes you up. Use when the user wants encouragement, compliments, or just wants to feel good about their work.
+allowed-tools:
+  - Bash
+  - Read
+  - Edit
+  - Write
+  - Grep
+  - Glob
+  - Agent
+  - AskUserQuestion
+  - WebSearch
 ---
 
 ## Pre-check

@@ -1,6 +1,18 @@
 ---
 name: hello
+preamble-tier: 4
+version: 1.0.0
 description: Simple greeting skill for testing plugin installation. Use when the user types /debo:hello.
+allowed-tools:
+  - Bash
+  - Read
+  - Edit
+  - Write
+  - Grep
+  - Glob
+  - Agent
+  - AskUserQuestion
+  - WebSearch
 ---
 
 ## Pre-check

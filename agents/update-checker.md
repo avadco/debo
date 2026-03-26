@@ -3,8 +3,7 @@ name: update-checker
 description: Quickly checks if debo auto-update is enabled by reading debo-update.json
 model: haiku
 maxTurns: 3
-tools:
-  - Read
+disallowedTools: Write, Edit, NotebookEdit
 ---
 
 Read `debo-update.json` — try this path first:
