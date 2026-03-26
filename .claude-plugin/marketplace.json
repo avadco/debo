@@ -8,7 +8,7 @@
     {
       "name": "debo",
       "description": "Test plugin — validates SessionStart hooks, auto-setup, and marketplace auto-update.",
-      "version": "0.0.4",
+      "version": "0.0.5",
       "author": {
         "name": "avadco",
         "email": ""

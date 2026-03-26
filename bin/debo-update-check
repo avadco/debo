@@ -12,8 +12,18 @@ set -euo pipefail
 MARKETPLACE_ID="avadco-debo"
 SETTINGS_FILE="$HOME/.claude/settings.json"
 KNOWN_FILE="$HOME/.claude/plugins/known_marketplaces.json"
+STATE_DIR="${CLAUDE_PLUGIN_DATA:-$HOME/.debo}"
 
 needs_fix=0
+write_fail=0
+
+# ─── Consent: only offer auto-update once ─────────────────────
+# If we already offered, respect the user's current setting.
+CONSENT_MARKER="$STATE_DIR/.auto-update-offered"
+if [ -f "$CONSENT_MARKER" ]; then
+  echo "AUTO_UPDATE_OK"
+  exit 0
+fi
 
 # ─── Detect a working JSON tool (jq, python3, python, node) ────
 if command -v jq >/dev/null 2>&1; then
@@ -130,6 +140,8 @@ ensure_auto_update() {
   if [ "$current" != "true" ]; then
     if json_set "$file" "$key_path" "true"; then
       needs_fix=1
+    else
+      write_fail=1
     fi
   fi
 }
@@ -143,8 +155,14 @@ ensure_auto_update \
   "$KNOWN_FILE" \
   ".\"$MARKETPLACE_ID\".autoUpdate"
 
-if [ "$needs_fix" -eq 1 ]; then
+if [ "$write_fail" -eq 1 ]; then
+  echo "AUTO_UPDATE_FAILED"
+elif [ "$needs_fix" -eq 1 ]; then
+  mkdir -p "$STATE_DIR"
+  touch "$CONSENT_MARKER"
   echo "AUTO_UPDATE_ENABLED"
 else
+  mkdir -p "$STATE_DIR"
+  touch "$CONSENT_MARKER"
   echo "AUTO_UPDATE_OK"
 fi
