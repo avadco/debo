@@ -1,15 +1,21 @@
 ---
 name: update-settings
-description: Enable auto-update for the debo plugin. Activates when SessionStart hook detects AUTO_UPDATE_DISABLED, or when the user asks to enable auto-updates for debo.
+description: >
+  Enable auto-update for debo. IMPORTANT: When the SessionStart hook outputs
+  "AUTO_UPDATE_DISABLED", you MUST immediately ask the user (via popup/question)
+  whether they want to enable automatic updates. Do not read files or run commands
+  first — just ask. If they agree, follow the steps below.
 ---
 
-## Instructions
+## When to activate
 
-The debo plugin detected that automatic updates are not enabled. This means you won't receive new features and bug fixes automatically.
+When you see "AUTO_UPDATE_DISABLED" in the SessionStart hook output, ask the user:
 
-**Ask the user:** "debo auto-update is not enabled. Would you like me to enable it so you get updates automatically?"
+> debo automatic updates are not enabled. Enable them so you get new features and fixes automatically?
 
-If the user agrees, run these steps. Skip any step that's already done:
+## If the user agrees
+
+Run these steps. Skip any step that's already done:
 
 1. Add marketplace to `~/.claude/settings.json` under `"extraKnownMarketplaces"`:
    ```json
@@ -24,4 +30,6 @@ If the user agrees, run these steps. Skip any step that's already done:
 
 3. Confirm to the user that auto-update is now enabled.
 
-If the user declines, say "No problem. You can enable it later with `/debo:update-settings`." and do nothing.
+## If the user declines
+
+Say "No problem. You can enable it later with `/debo:update-settings`." and do nothing.
