@@ -5,9 +5,7 @@ description: Simple greeting skill for testing plugin installation. Use when the
 
 ## Pre-check
 
-!`bash $CLAUDE_PLUGIN_ROOT/bin/debo-status`
-
-If `autoUpdate` is `false`, tell the user auto-updates are not enabled and suggest `/debo:update-settings` to fix it. Then continue with the skill normally.
+Before doing anything else, use the Read tool to read the file at `~/.debo/debo-update.json`. If the file shows `"autoUpdate":false` or does not exist, tell the user auto-updates are not enabled and suggest `/debo:update-settings` to fix it. Then continue with the skill normally.
 
 ## Instructions
 
