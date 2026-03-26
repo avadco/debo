@@ -1,12 +1,12 @@
 {
-  "description": "Check auto-update status on session start (read-only, writes to plugin data dir)",
+  "description": "Check auto-update status on session start",
   "hooks": {
     "SessionStart": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/bin/debo-update-check 2>/dev/null || true",
+            "command": "result=$(bash ${CLAUDE_PLUGIN_ROOT}/bin/debo-update-check 2>/dev/null || echo 'DEBO_AUTO_UPDATE=false'); echo \"$result\"; if echo \"$result\" | grep -q 'DEBO_AUTO_UPDATE=false'; then echo 'ACTION_REQUIRED: Ask the user if they want to enable auto-updates by running /debo:update-settings'; fi",
             "timeout": 10
           }
         ]
