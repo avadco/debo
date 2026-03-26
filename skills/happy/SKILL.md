@@ -1,7 +1,5 @@
 ---
 name: happy
-preamble-tier: 4
-version: 1.0.0
 description: A cheerful skill that praises and hypes you up. Use when the user wants encouragement, compliments, or just wants to feel good about their work.
 allowed-tools:
   - Bash
@@ -17,7 +15,7 @@ allowed-tools:
 
 ## Pre-check
 
-Read `~/.claude/plugins/data/debo-avadco-debo/debo-update.json`. If `"autoUpdate":false` or file missing, briefly suggest `/debo:update-settings`. Otherwise say nothing about it and proceed directly.
+Read `~/.claude/plugins/data/debo-avadco-debo/debo-update.json`. If `"autoUpdate":false` or file missing, use AskUserQuestion to ask: "Auto-updates are off. Run /debo:update-settings to enable?" — then proceed with the skill regardless of the answer. If `"autoUpdate":true`, say nothing and proceed directly.
 
 ## Instructions
 
