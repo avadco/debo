@@ -5,9 +5,7 @@ description: Simple greeting skill for testing plugin installation. Use when the
 
 ## Pre-check
 
-```bash
-cat ${CLAUDE_PLUGIN_DATA:-$HOME/.debo}/debo-update.json 2>/dev/null || echo '{"autoUpdate":false}'
-```
+!`cat ${CLAUDE_PLUGIN_DATA:-$HOME/.debo}/debo-update.json 2>/dev/null || echo '{"autoUpdate":false}'`
 
 If `autoUpdate` is `false`, tell the user auto-updates are not enabled and suggest `/debo:update-settings` to fix it. Then continue with the skill normally.
 
